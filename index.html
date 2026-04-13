@@ -3,146 +3,391 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zajil - GCC News Monitor</title>
+    <title>Zajil-News</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #0a0a0a;
             color: #e0e0e0;
-            line-height: 1.6;
+            line-height: 1.7;
         }
         .container {
-            max-width: 700px;
+            max-width: 720px;
             margin: 0 auto;
             padding: 60px 24px;
         }
+
+        /* Header */
         .header {
             text-align: center;
-            margin-bottom: 48px;
+            margin-bottom: 56px;
+        }
+        .header img {
+            width: 128px;
+            height: 128px;
+            border-radius: 28px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15);
         }
         .header h1 {
             font-size: 2.5rem;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
-        .header p {
-            font-size: 1.1rem;
+        .header .subtitle {
+            font-size: 1.15rem;
             color: #888;
+            margin-bottom: 12px;
         }
+        .badges {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .badge-beta { background: #1a1a2e; color: #3b82f6; }
+        .badge-ios { background: #1a2e1a; color: #22c55e; }
+        .badge-free { background: #2e2a1a; color: #eab308; }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin-bottom: 48px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .nav a:hover {
+            color: #fff;
+            background: #1a1a1a;
+        }
+
+        /* Sections */
         .section {
-            margin-bottom: 40px;
+            margin-bottom: 44px;
         }
         .section h2 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: #fff;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #222;
-        }
-        .section p, .section li {
-            color: #aaa;
-            margin-bottom: 8px;
-        }
-        .section ul {
-            padding-left: 20px;
-        }
-        .faq-item {
             margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section h2 .icon {
+            font-size: 1.1rem;
+        }
+        .section p {
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+        /* Feature grid */
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 500px) {
+            .features { grid-template-columns: 1fr; }
+        }
+        .feature-card {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 16px;
+        }
+        .feature-card h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ddd;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .feature-card p {
+            font-size: 0.85rem;
+            color: #777;
+            margin: 0;
+        }
+
+        /* Score legend */
+        .score-legend {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .score-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+        .score-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .dot-red { background: #ef4444; }
+        .dot-orange { background: #f97316; }
+        .dot-blue { background: #3b82f6; }
+
+        /* FAQ */
+        .faq-item {
+            margin-bottom: 18px;
+            padding: 14px 16px;
+            background: #111;
+            border: 1px solid #1a1a1a;
+            border-radius: 10px;
         }
         .faq-item strong {
             color: #ddd;
             display: block;
             margin-bottom: 4px;
+            font-size: 0.9rem;
         }
-        .contact-link {
-            color: #3b82f6;
-            text-decoration: none;
-        }
-        .contact-link:hover {
-            text-decoration: underline;
-        }
-        .badge {
-            display: inline-block;
-            background: #1a1a2e;
-            color: #3b82f6;
-            padding: 4px 12px;
-            border-radius: 20px;
+        .faq-item p {
             font-size: 0.85rem;
-            font-weight: 600;
+            color: #777;
+            margin: 0;
+        }
+
+        /* Links */
+        a { color: #3b82f6; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Tech stack */
+        .tech-list {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
             margin-top: 8px;
         }
+        .tech-tag {
+            background: #1a1a1a;
+            color: #888;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Privacy cards */
+        .privacy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        @media (max-width: 500px) {
+            .privacy-grid { grid-template-columns: 1fr; }
+        }
+        .privacy-card {
+            text-align: center;
+            padding: 14px;
+            background: #111;
+            border: 1px solid #1a1a1a;
+            border-radius: 10px;
+        }
+        .privacy-card .check {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+        .privacy-card p {
+            font-size: 0.8rem;
+            color: #777;
+            margin: 0;
+        }
+
+        /* Footer */
         .footer {
             text-align: center;
             margin-top: 60px;
             padding-top: 24px;
-            border-top: 1px solid #222;
-            color: #555;
-            font-size: 0.85rem;
+            border-top: 1px solid #1a1a1a;
+            color: #444;
+            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <div class="header">
-            <img src="AppIcon.png" alt="Zajil" style="width: 120px; height: 120px; border-radius: 24px; margin-bottom: 16px;">
-            <h1>Zajil</h1>
-            <p>Real-time GCC News Monitor</p>
-            <span class="badge">Beta</span>
+            <img src="AppIcon.png" alt="Zajil-News">
+            <h1>Zajil-News</h1>
+            <p class="subtitle">Real-Time GCC News Intelligence</p>
+            <div class="badges">
+                <span class="badge badge-beta">Beta</span>
+                <span class="badge badge-ios">iOS 18.6+</span>
+                <span class="badge badge-free">Free</span>
+            </div>
         </div>
 
-        <div class="section">
-            <h2>About</h2>
-            <p>Zajil is a real-time news monitoring app focused on the Gulf Cooperation Council (GCC) region. It uses AI to score events by severity, tracks financial markets, and delivers push notifications for critical developments.</p>
+        <!-- Navigation -->
+        <div class="nav">
+            <a href="#about">About</a>
+            <a href="#features">Features</a>
+            <a href="#scoring">Scoring</a>
+            <a href="#faq">FAQ</a>
+            <a href="#privacy">Privacy</a>
+            <a href="#contact">Contact</a>
         </div>
 
-        <div class="section">
-            <h2>Features</h2>
-            <ul>
-                <li>AI-scored news events (1-10 severity scale)</li>
-                <li>Interactive map with event pins</li>
-                <li>Live market data: indices, stocks, commodities, forex</li>
-                <li>AI-generated situation briefs and threat assessments</li>
-                <li>Push notifications for critical events</li>
-                <li>Home screen widgets</li>
-                <li>Bilingual support (English and Arabic)</li>
-                <li>Live TV news channels</li>
-            </ul>
+        <!-- About -->
+        <div class="section" id="about">
+            <h2><span class="icon">&#128218;</span> About</h2>
+            <p>Zajil-News is a real-time news monitoring app built for the Gulf Cooperation Council (GCC) region. It uses AI to score every event by severity, tracks live financial markets, delivers push notifications for critical developments, and provides AI-generated situation briefs.</p>
+            <p>Designed for analysts, journalists, investors, and anyone who needs to stay informed about the Gulf region.</p>
         </div>
 
-        <div class="section">
-            <h2>FAQ</h2>
+        <!-- Features -->
+        <div class="section" id="features">
+            <h2><span class="icon">&#9889;</span> Features</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>&#128240; News Dashboard</h3>
+                    <p>AI-scored events with interactive map, filters by region and severity, auto-scrolling carousel.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>&#128200; Finance Dashboard</h3>
+                    <p>Live indices, stocks, commodities, forex. Market charts, watchlist, and curated finance news.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>&#129504; AI Insights</h3>
+                    <p>AI-generated situation briefs, per-country threat assessments, key trends, and watch items.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>&#128276; Alerts</h3>
+                    <p>Push notifications for critical events. Severity-ranked alerts with source attribution.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>&#128250; Live TV</h3>
+                    <p>Five live news channels: Al Arabiya, AJ English, AJ Arabic, Sky News, France 24.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>&#128444; Widgets</h3>
+                    <p>Home screen widgets: top alert, threat level, alerts list, full dashboard. Tap to open articles.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>&#127758; Bilingual</h3>
+                    <p>Full English and Arabic support with right-to-left layout.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>&#128506; Interactive Map</h3>
+                    <p>Color-coded pins by severity. Tap to read. Standard and satellite views.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scoring -->
+        <div class="section" id="scoring">
+            <h2><span class="icon">&#127919;</span> Severity Scoring</h2>
+            <p>Every event is scored 1-10 by AI based on its potential impact on the GCC region.</p>
+            <div class="score-legend">
+                <div class="score-pill">
+                    <span class="score-dot dot-red"></span> 8-10 Critical
+                </div>
+                <div class="score-pill">
+                    <span class="score-dot dot-orange"></span> 5-7 Elevated
+                </div>
+                <div class="score-pill">
+                    <span class="score-dot dot-blue"></span> 1-4 Low
+                </div>
+            </div>
+        </div>
+
+        <!-- Tech -->
+        <div class="section" id="tech">
+            <h2><span class="icon">&#128736;</span> Built With</h2>
+            <div class="tech-list">
+                <span class="tech-tag">SwiftUI</span>
+                <span class="tech-tag">WidgetKit</span>
+                <span class="tech-tag">MapKit</span>
+                <span class="tech-tag">Python / Flask</span>
+                <span class="tech-tag">Claude AI</span>
+                <span class="tech-tag">APNs</span>
+                <span class="tech-tag">Railway</span>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="section" id="faq">
+            <h2><span class="icon">&#10067;</span> FAQ</h2>
             <div class="faq-item">
                 <strong>What devices are supported?</strong>
-                <p>Zajil runs on iPhone and iPad with iOS 18.6 or later.</p>
+                <p>iPhone and iPad running iOS 18.6 or later.</p>
             </div>
             <div class="faq-item">
-                <strong>How are news events scored?</strong>
-                <p>Each event is scored 1-10 by AI based on its potential impact on the GCC region. Red (8-10) = critical, Orange (5-7) = elevated, Blue (1-4) = low.</p>
+                <strong>How are events scored?</strong>
+                <p>AI analyzes each event's potential impact on the GCC region and assigns a 1-10 severity score. Red = critical, Orange = elevated, Blue = low.</p>
             </div>
             <div class="faq-item">
                 <strong>Is the app free?</strong>
-                <p>Yes, Zajil is free to use.</p>
+                <p>Yes, completely free with no in-app purchases.</p>
             </div>
             <div class="faq-item">
-                <strong>How do I report an issue?</strong>
-                <p>Email us at the address below or use the TestFlight feedback feature.</p>
+                <strong>How do I report a bug?</strong>
+                <p>Use the TestFlight feedback feature (shake your device) or email us below.</p>
+            </div>
+            <div class="faq-item">
+                <strong>How often does data refresh?</strong>
+                <p>News events refresh every 5 minutes. Market data updates every 2 minutes.</p>
             </div>
         </div>
 
-        <div class="section">
-            <h2>Contact & Support</h2>
+        <!-- Privacy -->
+        <div class="section" id="privacy">
+            <h2><span class="icon">&#128274;</span> Privacy</h2>
+            <div class="privacy-grid">
+                <div class="privacy-card">
+                    <div class="check">&#9989;</div>
+                    <p>No accounts or sign-in</p>
+                </div>
+                <div class="privacy-card">
+                    <div class="check">&#9989;</div>
+                    <p>No personal data collected</p>
+                </div>
+                <div class="privacy-card">
+                    <div class="check">&#9989;</div>
+                    <p>No tracking or analytics</p>
+                </div>
+            </div>
+            <p style="margin-top: 14px; font-size: 0.85rem;">Zajil-News collects device tokens for push notifications only. These are not linked to your identity and are never shared with third parties.</p>
+        </div>
+
+        <!-- Contact -->
+        <div class="section" id="contact">
+            <h2><span class="icon">&#128233;</span> Contact & Support</h2>
             <p>For support, feedback, or questions:</p>
-            <p>Email: <a class="contact-link" href="mailto:faisalalromaihi7@gmail.com">faisalalromaihi7@gmail.com</a></p>
+            <p>Email: <a href="mailto:faisalalromaihi7@gmail.com">faisalalromaihi7@gmail.com</a></p>
         </div>
 
-        <div class="section">
-            <h2>Privacy</h2>
-            <p>Zajil collects device tokens for push notifications only. No personal data is collected, stored, or shared. No user accounts or sign-in required.</p>
-        </div>
-
+        <!-- Footer -->
         <div class="footer">
             <p>&copy; 2026 Faisal Alromaihi. All rights reserved.</p>
         </div>
